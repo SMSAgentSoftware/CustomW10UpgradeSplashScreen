@@ -237,7 +237,7 @@ $Window.Add_Loaded({
 
 })
 
-# Event: Window closing (for testing)
+# Event: Window closing
 $Window.Add_Closing({
 
     # Restore the taskbar
@@ -250,12 +250,14 @@ $Window.Add_Closing({
 
 })
 
-# Event: Close the window on right-click (for testing)
+# Event: Allows to close the window on right-click (uncomment for testing)
+<#
 $Window.Add_MouseRightButtonDown({
 
     $This.Close()
 
 })
+#>
 
 # Display the window
 $DispatcherTimer.Start()
