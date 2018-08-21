@@ -1,8 +1,5 @@
 ﻿# Calls the script that creates the OS upgrade background into a runspace, one per detected screen
 
-#$Location = $PSScriptRoot
-#$Location = "C:\Users\tjones\Desktop\WaaS 1803 Scripts"
-
 # Add required assemblies
 Add-Type -AssemblyName System.Windows.Forms
 
