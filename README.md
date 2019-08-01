@@ -1,7 +1,9 @@
 # Custom Windows 10 Upgrade Splash Screen
 PowerShell scripts to create a custom Windows 10 Upgrade Splash Screen for use with a ConfigMgr In-Place Upgrade task sequence
 
-Read more here: https://smsagent.wordpress.com/2018/08/21/create-a-custom-splash-screen-for-a-windows-10-in-place-upgrade/
+More info here:
+Version 1: https://smsagent.wordpress.com/2018/08/21/create-a-custom-splash-screen-for-a-windows-10-in-place-upgrade/
+Version 2: https://smsagent.blog/2019/08/01/windows-10-upgrade-splash-screen-take-2/
 
 Splash screen demo:
 
