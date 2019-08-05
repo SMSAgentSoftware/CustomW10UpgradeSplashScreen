@@ -105,23 +105,27 @@ $UI.TextBlock3.Text = "00:00:00"
 $UI.TextBlock4.Text = "This will take a while...don't turn off your pc"
 
 
-# Find the user identity from the domain if possible
-Try
+# Find the user identity from the registry
+$LoggedOnSID = Get-WmiObject -Namespace ROOT\CCM -Class CCM_UserLogonEvents -Filter "LogoffTime=null" | Select -ExpandProperty UserSID
+If ($LoggedOnSID.GetType().IsArray)
 {
-    $PrincipalContext = [System.DirectoryServices.AccountManagement.PrincipalContext]::new([System.DirectoryServices.AccountManagement.ContextType]::Domain, [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain())
-    $GivenName = ([System.DirectoryServices.AccountManagement.Principal]::FindByIdentity($PrincipalContext,[System.DirectoryServices.AccountManagement.IdentityType]::SamAccountName,[Environment]::UserName)).GivenName
-    $PrincipalContext.Dispose()
-}
-Catch {}
-If ($GivenName)
-{
-    $UI.MainTextBlock.Text = "Hi $GivenName"
+    # Multiple values returned
+    $GivenName = "there"
 }
 Else
 {
-    $UI.MainTextBlock.Text = "Hi there"
+    $RegKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\SessionData"
+    $DisplayName = (Get-ChildItem -Path $RegKey | Where {$_.GetValue('LoggedOnUserSID') -eq $LoggedOnSID}).GetValue('LoggedOnDisplayName')
+    If ($DisplayName)
+    {
+        $GivenName = $DisplayName.Split(',')[1].Trim()
+    }
+    Else
+    {
+        $GivenName = "there"
+    }
 }
-
+$UI.MainTextBlock.Text = "Hi $GivenName"
 
 # Create some animations
 $FadeinAnimation = [System.Windows.Media.Animation.DoubleAnimation]::new(0,1,[System.Windows.Duration]::new([Timespan]::FromSeconds(3)))
